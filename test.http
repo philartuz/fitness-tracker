@@ -1,0 +1,7 @@
+POST http://localhost:8080/workouts
+Content-Type: application/json
+
+{
+  "name": "Push Day",
+  "date": "2026-05-05"
+}
