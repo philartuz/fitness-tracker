@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Workout({ setPage }) {
     const [exercise, setExercise] = useState("");
     const [reps, setReps] = useState("");
     const [weight, setWeight] = useState("");
-    const [list, setList] = useState([]);
+
+    const [list, setList] = useState(() => {
+        const saved = localStorage.getItem("workouts");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("workouts", JSON.stringify(list));
+    }, [list]);
 
     function addSet() {
-        setList([...list, { exercise, reps, weight }]);
+        const newEntry = {
+            exercise,
+            reps,
+            weight
+        };
+
+        setList([...list, newEntry]);
+
         setExercise("");
         setReps("");
         setWeight("");
